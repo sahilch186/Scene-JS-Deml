@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Scene JS</title>
+	<style type="text/css">
+		body{
+			margin: 0;
+			height: 100vh;
+			background: #3f51b5;
+			display: grid;
+			justify-items: center;
+			align-items: center;
+			font-family: sans-serif;
+		}
+
+		.container{
+			background: white;
+			width: 50%;
+			padding: 2em;
+			border-radius: 10px;
+			height: 5%;
+		}
+
+		.container h1, .container img, .container .price{
+			display: inline-block;
+			margin: 0;
+		}
+
+		.price{
+			float: right;
+			font-size: 1.7em;
+			color: #1a237e;
+		}
+
+		span{
+			cursor: pointer;
+			margin-left: 10px;
+			font-size: 2em;
+			color: #3f51b5;
+			padding: 5px 10px;
+			border-radius: 50%;
+		}
+
+		.info{
+			display: none;
+		}
+
+		.item{
+			margin: 2em 0;
+			display: grid;
+			grid-template-columns: 75% auto;
+		}
+
+		.item a{
+			text-decoration: none;
+			color: #1a237e;
+			font-size: 1.1em;
+		}
+
+		.subprice{
+			text-align: right;
+			font-size: 1.2em;
+			color: #1a237e;
+		}
+		.description p{
+			margin: 0;
+			color: #7986cb;
+
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<h1>My Cart</h1>
+		<span id="cta">+</span>
+		<p class="price">450</p>
+		<div class="info">
+			<div class="item">
+				<div class="description">
+					<a href="#">Product 1</a>
+					<p>This is Product 1</p>
+				</div>
+				<p class="subprice">55</p>
+			</div>
+			<div class="item">
+				<div class="description">
+					<a href="#">Product 2</a>
+					<p>This is Product 2</p>
+				</div>
+				<p class="subprice">55</p>
+			</div>
+			<div class="item">
+				<div class="description">
+					<a href="#">Product 3</a>
+					<p>This is Product 3</p>
+				</div>
+				<p class="subprice">55</p>
+			</div>
+		</div>
+	</div>
+
+	<script src="scene.min.js"></script>
+	<script type="text/javascript">
+var sc1 = new Scene({
+			".container":[
+				{
+					transform: "scale(0.7)",
+					opacity: "0"
+				},
+				{
+					transform: "scale(1)",
+					opacity: "1"
+				}
+			]
+		},
+		{
+			duration: 1.5,
+			easing: Scene.EASE_IN_OUT,
+			selector: true
+		}).play();
+
+var sc2 = new Scene({
+	"#cta" : {
+		0: {
+			"background" : "white"
+		},
+		.3: {
+			"background" : "#e8eaf6"
+		},
+		.5: {
+			"background" : "white"
+		}
+	},
+	".container": {
+		.4: {
+			height : "5%",
+			opacity : "1"
+		},
+		.7 : {
+			height : "50%"
+		}
+	},
+	".info" : {
+		.7 : {
+			display : "block",
+			opacity : "0"
+		},
+		1.5 : {
+			opacity : "1"
+		},
+		".item" : function(i) {
+			return{
+				0:{
+					opacity : "0"
+				},
+				.5 : {
+					opacity : "1"
+				},
+				options : {
+					delay: 1 * .5
+				}
+			}
+		}
+	}
+},
+	{
+	easing: Scene.EASE_IN_OUT,
+	selector: true
+})
+		var cta = document.getElementById("cta");
+		cta.addEventListener('click', function() {
+			if(sc2.getDirection() === "normal"){
+				sc2.playCSS();
+				sc2.setDirection('reverse');
+			}
+			else{
+				sc2.playCSS();
+				sc2.setDirection('normal');
+			}
+			sc2.playCSS();
+		})
+
+	</script>
+</body>
+</html>
